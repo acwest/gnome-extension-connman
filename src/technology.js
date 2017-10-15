@@ -63,7 +63,7 @@ const Technology = new Lang.Class({
     },
 
     propertyChanged: function(name, value) {
-        if(name == 'Powered') {
+        if(name === 'Powered') {
             if(value)
                 this.show();
             else
@@ -126,12 +126,12 @@ const Technology = new Lang.Class({
             this._indicator = this._services[Object.keys(this._services)[0]];
             for(let path in this._services) {
                 let state = this._services[path]._properties['State'];
-                if(state != 'idle')
+                if(state !== 'idle')
                     this._indicator = this._services[path]._indicator;
             }
             for(let path in this._services) {
                 let state = this._services[path]._properties['State'];
-                if(state != 'idle' && state != 'failure')
+                if(state !== 'idle' && state !== 'failure')
                     this._indicator = this._services[path]._indicator;
             }
         }
@@ -222,7 +222,7 @@ const WirelessTechnology = new Lang.Class({
         this.parent(id, service);
         service.menu.addMenuItem(this._createConnectionMenuItem(), 1);
         let state = this._services[id].state;
-        if(state != 'idle' && state != 'disconnect' && state != 'failure') {
+        if(state !== 'idle' && state !== 'disconnect' && state !== 'failure') {
             this._connected[id] = true;
             this._menu.actor.hide();
             this._connectedCount++;
@@ -234,7 +234,7 @@ const WirelessTechnology = new Lang.Class({
     updateService: function(id, properties) {
         this.parent(id, properties);
         let state = this._services[id]._properties['State'];
-        if(state != 'idle' && state != 'disconnect' && state != 'failure') {
+        if(state !== 'idle' && state !== 'disconnect' && state !== 'failure') {
             if(!this._connected[id]) {
                 this._connected[id] = true;
                 this._connectedCount++;
@@ -256,7 +256,7 @@ const WirelessTechnology = new Lang.Class({
 
     removeService: function(id) {
         let state = this._services[id]._properties['State'];
-        if(state != 'idle' && state != 'disconnect' && state != 'failure') {
+        if(state !== 'idle' && state !== 'disconnect' && state !== 'failure') {
             this._services[id].hide();
             if(this._connected[id]) {
                 this._connected[id] = false;

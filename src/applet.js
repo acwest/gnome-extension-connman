@@ -112,7 +112,7 @@ const Menu = new Lang.Class({
         let type;
         if(properties.Type.deep_unpack) {
             type = properties.Type.deep_unpack();
-            if(type == 'vpn') {
+            if(type === 'vpn') {
                 indicator.destroy();
                 return;
             }
@@ -126,7 +126,7 @@ const Menu = new Lang.Class({
         this._serviceTypes[path] = type;
 
         let proxy;
-        if(type != 'vpn')
+        if(type !== 'vpn')
             proxy = new Interface.ServiceProxy(path);
         else
             proxy = new Interface.ConnectionProxy(path);
@@ -161,7 +161,7 @@ const Menu = new Lang.Class({
     clear: function() {
         for(let type in this._technologies) {
             try {
-                if(type != "vpn") {
+                if(type !== "vpn") {
                     this._technologies[type].destroy();
                     delete this._technologies[type];
                 }
@@ -213,7 +213,7 @@ const Applet = new Lang.Class({
     },
 
     _updateService: function(path, properties) {
-        if(path.indexOf("service/vpn") != -1)
+        if(path.indexOf("service/vpn") !== -1)
             return;
         if(this._menu.getService(path))
             this._menu.updateService(path, properties);
@@ -229,7 +229,7 @@ const Applet = new Lang.Class({
                 return;
             }
             let services = result[0];
-            for each(let [path, properties] in services)
+            for (let [path, properties] of services)
                 this._updateService(path, properties);
 
         }.bind(this));
@@ -244,7 +244,7 @@ const Applet = new Lang.Class({
                 return;
             }
             let technologies = result[0];
-            for each(let [path, properties] in technologies)
+            for (let [path, properties] of technologies)
                 this._menu.addTechnology(path, properties);
             this._updateAllServices();
         }.bind(this));
@@ -264,7 +264,7 @@ const Applet = new Lang.Class({
                 return;
             }
             let connections = result[0];
-            for each(let [path, properties] in connections) {
+            for (let [path, properties] of connections) {
                 properties['Type'] = 'vpn';
                 this._menu.addService(path, properties, this._addIndicator());
             }
@@ -310,9 +310,9 @@ const Applet = new Lang.Class({
         this._ssig = this._manager.connectSignal('ServicesChanged',
             function(proxy, sender, [changed, removed]) {
                 try {
-                    for each(let [path, properties] in changed)
+                    for (let [path, properties] of changed)
                         this._updateService(path, properties);
-                    for each(let path in removed)
+                    for (let path of removed)
                         this._menu.removeService(path);
                 } catch(error) {
                     Logger.logException(error);

@@ -234,7 +234,7 @@ const ServiceChooser = new Lang.Class({
             return;
         let intf = service[1];
         if(!this._boxes[intf]) {
-            if(Object.keys(this._boxes).length == 1)
+            if(Object.keys(this._boxes).length === 1)
                 this._boxes[Object.keys(this._boxes)[0]]['label'].show();
             let label = new St.Label({
                 text: intf,
@@ -328,7 +328,7 @@ const Service = new Lang.Class({
     },
 
     buttonEvent: function() {
-        if(this.state == 'idle' || this.state == 'failure' || this.state == 'disconnect')
+        if(this.state === 'idle' || this.state === 'failure' || this.state === 'disconnect')
             this._proxy.ConnectRemote();
         else
             this._proxy.DisconnectRemote();
@@ -350,9 +350,9 @@ const Service = new Lang.Class({
         }
         if(properties.State)
             this.state = properties.State.deep_unpack();
-        if(this.state == 'idle' || this.state == 'disconnect')
+        if(this.state === 'idle' || this.state === 'disconnect')
             this._connectionSwitch.label.text = _("Connect");
-        else if(this.state == 'failure')
+        else if(this.state === 'failure')
             this._connectionSwitch.label.text = _("Reconnect");
         else
             this._connectionSwitch.label.text = _("Disconnect");
@@ -360,8 +360,8 @@ const Service = new Lang.Class({
             this.name = this._properties['Name'];
             this.hidden = false;
         }
-        if(this.state == 'idle' || this.state == 'disconnect' ||
-                this.state == 'failure')
+        if(this.state === 'idle' || this.state === 'disconnect' ||
+                this.state === 'failure')
             this._indicator.hide();
         else
             this._indicator.show();
@@ -474,7 +474,7 @@ const EthernetService = new Lang.Class({
 
     update: function(properties) {
         this.parent(properties);
-        if(version < 318 && this._properties['Name'] == 'Wired') {
+        if(version < 318 && this._properties['Name'] === 'Wired') {
             /* ensure translated name */
             this._properties['Name'] = _("Wired");
             this.label.text = _("Wired");
@@ -500,7 +500,7 @@ const WirelessService = new Lang.Class({
 
     securityIcon: function() {
         let security = this._properties['Security'][0];
-        if(!security || security == 'none')
+        if(!security || security === 'none')
             return '';
         let icons = {
             ieee8021x: 'security-high-symbolic',
@@ -516,8 +516,8 @@ const WirelessService = new Lang.Class({
     update: function(properties) {
         this.parent(properties);
 
-        if(this.state == 'idle' || this.state == 'disconnect' ||
-                this.state == 'failure')
+        if(this.state === 'idle' || this.state === 'disconnect' ||
+                this.state === 'failure')
             this.hide();
         else
             this.show();

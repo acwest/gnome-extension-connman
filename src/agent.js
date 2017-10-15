@@ -190,7 +190,7 @@ const AbstractAgent = new Lang.Class({
 
     RequestInputAsync: function([service, fields], invocation) {
         Logger.logDebug('Requested password');
-        let fields = Object.keys(fields)
+        let f = Object.keys(fields)
             .map(function(key) {
                 fields[key] = fields[key].deep_unpack();
                 Object.keys(fields[key]).map(function(innerKey) {
@@ -200,7 +200,7 @@ const AbstractAgent = new Lang.Class({
             });
         let dialogFields = [];
         for(let i = 0; i < fields.length; i++)
-            if(fields[i][1]['Requirement'] == 'mandatory')
+            if(fields[i][1]['Requirement'] === 'mandatory')
                 dialogFields.push(new DialogField(fields[i][0]));
 
         let callback = function(fields) {
